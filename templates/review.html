@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Answers</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Review Answers</h1>
+    {% for item in review_data %}
+        <div>
+            <h3>Question:</h3>
+            <img src="{{ url_for('static', filename=item['image_url']) }}" alt="Question Image">
+            <p>Your Answer: {{ item['user_answer'] }}</p>
+            <p>Correct Answer: {{ item['correct_answer'] }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>

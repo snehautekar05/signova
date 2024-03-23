@@ -13,47 +13,15 @@ questions = [
         'options': ['3', '2', '4', '1'],
         'correct_answer': '2'
     },
-        {
-        'image_url': '/numbers/3/1.jpg',
-        'options': ['1', '6', '3', '7'],
-        'correct_answer': '3'
-    },
-        {
-        'image_url': '/numbers/4/1.jpg',
-        'options': ['0', '9', '4', '2'],
-        'correct_answer': '4'
-    },
-        {
-        'image_url': '/numbers/5/2.jpg',
-        'options': ['5', '6', '3', '8'],
-        'correct_answer': '5'
-    },
-        {
-        'image_url': '/numbers/6/1.jpg',
-        'options': ['4', '2', '6', '9'],
-        'correct_answer': '6'
-    },
-        {
-        'image_url': '/numbers/7/1.jpg',
-        'options': ['2', '3', '8', '7'],
-        'correct_answer': '7'
-    },
-        {
-        'image_url': '/numbers/8/1.jpg',
-        'options': ['5', '3', '8', '4'],
-        'correct_answer': '8'
-    },
-        {
-        'image_url': '/numbers/9/1.jpg',
-        'options': ['6', '9', '2', '7'],
-        'correct_answer': '9'
-    },
+    # Add more questions here
 ]
 
 scoreboard = {
     'correct': 0,
     'total': len(questions)
 }
+
+user_answers = []  # Store user's answers for review
 
 @app.route('/')
 def index():
@@ -64,6 +32,8 @@ def index():
 def answer():
     user_answer = request.form['option']
     question_index = int(request.form['question_index'])
+
+    user_answers.append({'question_index': question_index, 'user_answer': user_answer})
 
     if user_answer == questions[question_index]['correct_answer']:
         scoreboard['correct'] += 1
@@ -78,6 +48,17 @@ def answer():
 @app.route('/score')
 def score():
     return render_template('score.html', scoreboard=scoreboard)
+
+@app.route('/review')
+def review():
+    review_data = []
+    for item in user_answers:
+        question_index = item['question_index']
+        user_answer = item['user_answer']
+        correct_answer = questions[question_index]['correct_answer']
+        image_url = questions[question_index]['image_url']
+        review_data.append({'image_url': image_url, 'user_answer': user_answer, 'correct_answer': correct_answer})
+    return render_template('review.html', review_data=review_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
