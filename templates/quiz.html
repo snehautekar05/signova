@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - {{ category }}</title>
+</head>
+<body>
+    <h1>Question {{ question_num }}</h1>
+    <img src="{{ url_for('static', filename=category + '/' + question) }}" alt="Question">
+    <form action="" method="post">
+        {% for option in options %}
+            <input type="submit" name="option" value="{{ option }}">
+        {% endfor %}
+    </form>
+</body>
+</html>

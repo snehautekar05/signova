@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Home</title>
+</head>
+<body>
+    <h1>Choose a Quiz Category:</h1>
+    <ul>
+        <li><a href="{{ url_for('quiz', category='number', question_num=1) }}">Number Quiz</a></li>
+        <li><a href="{{ url_for('quiz', category='alphabet', question_num=1) }}">Alphabet Quiz</a></li>
+        <!-- Add more categories as needed -->
+    </ul>
+</body>
+</html>
