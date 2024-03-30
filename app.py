@@ -36,7 +36,11 @@ def home():
 @app.route('/quiz/<category>/<int:question_num>', methods=['GET', 'POST'])
 def quiz(category, question_num):
     if request.method == 'POST':
-        selected_option = request.form['option']
+        app.logger.info('Form Data: %s', request.form)
+        selected_option = request.form.get('option')  # Access the selected option directly
+        app.logger.info('Selected Option: %s', selected_option)
+
+
         if selected_option == quizzes[category]['answers'][question_num - 1]:
             session['score'] = session.get('score', 0) + 1
 
@@ -49,6 +53,8 @@ def quiz(category, question_num):
     options = quizzes[category]['options'][question_num - 1]
     return render_template('quiz.html', category=category, question_num=question_num, question=question, options=options)
 
+
+
 @app.route('/result/<category>')
 def result(category):
     score = session.get('score', 0)
@@ -56,13 +62,24 @@ def result(category):
     session.pop('score', None)  
     return render_template('result.html', score=score, total_questions=total_questions, category=category)
 
+# @app.route('/review/<category>')
+# def review(category):
+#     questions = quizzes[category]['questions']
+#     answers = quizzes[category]['answers']
+#     options = quizzes[category]['options']
+#     enumerated_questions = list(enumerate(questions, start=1))
+#     return render_template('review.html', category=category, enumerated_questions=enumerated_questions, answers=answers, options=options)
 @app.route('/review/<category>')
 def review(category):
     questions = quizzes[category]['questions']
     answers = quizzes[category]['answers']
     options = quizzes[category]['options']
     enumerated_questions = list(enumerate(questions, start=1))
-    return render_template('review.html', category=category, enumerated_questions=enumerated_questions, answers=answers, options=options)
+
+    # Get the selected options from session if available
+    selected_options = session.get('selected_options', {})
+
+    return render_template('review.html', category=category, enumerated_questions=enumerated_questions, answers=answers, options=options, selected_options=selected_options)
 
 
 if __name__ == '__main__':

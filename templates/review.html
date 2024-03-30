@@ -2,24 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Answers</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
 </head>
 <body>
-    <h1>Review Answers</h1>
-    <ul>
-        {% for index, question in enumerated_questions %}
-        {% for option in options %}
-
-            <li>
-                <img src="{{ url_for('static', filename=category + '/' + question) }}" alt="Question {{ index }}">
-               
-                    <p>Your Answer: {{ request.args.get('option' ~ index|string) }}</p>
-                    <p>Correct Answer: {{ answers[index - 1] }}</p>
-            </li>
+    <div class="container">
+        <h1 class="mt-5">Review Answers</h1>
+        <ul class="list-group mt-3">
+            {% for index, question in enumerated_questions %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img class="img-fluid" src="{{ url_for('static', filename=category + '/' + question) }}" alt="Question {{ index }}">
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="mt-2"><strong>Your Answer:</strong> {{ selected_options.get(index) }}</p>
+                            <p><strong>Correct Answer:</strong> {{ answers[index - 1] }}</p>
+                        </div>
+                    </div>
+                </li>
             {% endfor %}
-            {% endfor %}
-    </ul>
+        </ul>
+    </div>
 </body>
 </html>
