@@ -1,32 +1,72 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Answers</title>
+</head>
+<body>
+    <h1>Review Answers</h1>
+        {% for item in review_data %}
+            <div>
+                <h3>Question {{ item['question_num'] }}</h3>
+                <img src="{{ url_for('static', filename=item['question']) }}" alt="Question">
+               
+                    <p>Your Answer: {{ item['user_answer'] }}</p>
+                    <p>Correct Answer: {{ item['correct_answer'] }}</p>
+            </div>
+            {% endfor %}
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Answers</title>
+</head>
+<body>
+    <h1>Review Answers</h1>
+    <ul>
+        {% for index, question in enumerated_questions %}
+        {% for item in review_data %}
+
+            <li>
+                <img src="{{ url_for('static', filename=category + '/' + question) }}" alt="Question">
+               
+                <p>Your Answer: {{ item['user_answer'] }}</p>
+                    <p>Correct Answer: {{ answers[index - 1] }}</p>
+            </li>
+            {% endfor %}
+            {% endfor %}
+    </ul>
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Answers</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Review Answers</h1>
-        <ul class="list-group mt-3">
-            {% for index, question in enumerated_questions %}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img class="img-fluid" src="{{ url_for('static', filename=category + '/' + question) }}" alt="Question {{ index }}">
-                        </div>
-                        <div class="col-sm-8">
-                            <p class="mt-2"><strong>Your Answer:</strong> {{ selected_options.get(index) }}</p>
-                            <p><strong>Correct Answer:</strong> {{ answers[index - 1] }}</p>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <h1>Review Answers</h1>
+    <ul>
+        {% for item in combined_data %}
+            <li>
+                <img src="{{ url_for('static', filename=category + '/' + item['question']) }}" alt="Question">
+                <p>Your Answer: {{ item['review_item']['user_answer'] }}</p>
+                <p>Correct Answer: {{ item['correct_answer'] }}</p>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
+
+
+
