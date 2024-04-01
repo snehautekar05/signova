@@ -1,0 +1,19 @@
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.mt-5 {
+    margin-top: 3rem !important;
+}
+.mt-3 {
+    margin-top: 1.5rem !important;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
