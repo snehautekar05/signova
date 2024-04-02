@@ -124,11 +124,36 @@ quizzes = {
         ]
     },
     'alphabet': {
-        'questions': ['/A/1.jpg', '/B/1.jpg'], 
-        'answers': ['C', 'A'],  
+        'questions': ['/A/1.jpg', '/B/1.jpg', '/C/1.jpg', '/D/1.jpg', '/E/1.jpg', '/F/1.jpg', '/G/1.jpg', '/H/1.jpg', '/I/1.jpg', '/J/1.jpg', '/K/1.jpg', '/L/1.jpg', '/M/1.jpg', '/N/1.jpg', '/O1.jpg', '/P/1.jpg', '/Q/1.jpg', '/R/1.jpg', '/S/1.jpg', '/T/1.jpg', '/U/1.jpg', '/V/1.jpg', '/W/1.jpg', '/X/1.jpg', '/Y/1.jpg', '/Z/1.jpg', ], 
+        'answers': ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],  
         'options': [
-            ['Option 1A', 'Option 1B', 'Option 1C', 'Option 1D'],
-            ['Option 2A', 'Option 2B', 'Option 2C', 'Option 2D']
+           ['U', 'A', 'R', 'Z'],
+['K', 'C', 'B', 'A'],
+['T', 'S', 'R', 'C'],
+['D', 'M', 'V', 'Q'],
+['T', 'Y', 'F', 'E'],
+['O', 'S', 'F', 'Y'],
+['G', 'O', 'C', 'Y'],
+['E', 'C', 'T', 'H'],
+['I', 'K', 'F', 'Q'],
+['J', 'W', 'O', 'Q'],
+['Q', 'K', 'Z', 'I'],
+['L', 'C', 'K', 'Z'],
+['M', 'C', 'D', 'E'],
+['T', 'N', 'S', 'B'],
+['O', 'N', 'I', 'F'],
+['O', 'V', 'A', 'P'],
+['Q', 'Z', 'X', 'V'],
+['J', 'C', 'R', 'H'],
+['Q', 'S', 'R', 'I'],
+['R', 'H', 'T', 'S'],
+['E', 'Q', 'U', 'M'],
+['P', 'I', 'V', 'Z'],
+['S', 'I', 'W', 'J'],
+['S', 'Z', 'K', 'X'],
+['Y', 'F', 'J', 'N'],
+['Z', 'W', 'J', 'N'],
+
         ]
     }
 }
@@ -160,8 +185,13 @@ def quiz(category, question_num):
 def result(category):
     score = session.get('score', 0)
     total_questions = len(quizzes[category]['questions'])
+    correct_percent = score/total_questions*100
+    correct_percent =  round(correct_percent, 2)
+    print(correct_percent)
+    wrong_percent = 100-correct_percent
+    print(wrong_percent)
     session.pop('score', None)  
-    return render_template('result.html', score=score, total_questions=total_questions, category=category)
+    return render_template('result.html', score=score, total_questions=total_questions, category=category, correct_percent=correct_percent, wrong_percent=wrong_percent)
 
 @app.route('/review/<category>', methods=['GET','POST'])
 def review(category):
