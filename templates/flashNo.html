@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shuffled Image Flashcards</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+
+  #cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .flashcard {
+    width: calc(33.33% - 20px);
+    height: 200px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease;
+  }
+
+  .flashcard:hover {
+    transform: scale(1.05);
+  }
+
+  .flashcard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .flashcard .back {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 40px; /* Increase font size */
+    font-weight: bold; /* Make it bold */
+  }
+
+  .flashcard:hover .back {
+    display: flex;
+  }
+</style>
+</head>
+<body>
+
+<!-- Cards Container -->
+<div id="cardsContainer"></div>
+
+<script>
+  // Define the array of card data
+  const cardData = [
+    { image: 'static/img/number/1/1.jpg', text: '1' },
+    { image: 'static/img/number/2/1.jpg', text: '2' },
+    { image: 'static/img/number/3/1.jpg', text: '3' },
+    { image: 'static/img/number/4/1.jpg', text: '4' },
+    { image: 'static/img/number/5/1.jpg', text: '5' },
+    { image: 'static/img/number/6/1.jpg', text: '6' },
+    { image: 'static/img/number/7/1.jpg', text: '7' },
+    { image: 'static/img/number/8/1.jpg', text: '8' },
+    { image: 'static/img/number/9/1.jpg', text: '9' },
+  ];
+
+  // Shuffle function
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  // Shuffle the indices of the card data array
+  const shuffledIndices = shuffle([...Array(cardData.length).keys()]);
+
+  // Get the cards container element
+  const cardsContainer = document.getElementById('cardsContainer');
+
+  // Loop through the shuffled indices and create cards
+  shuffledIndices.forEach((index) => {
+    // Retrieve card data for this index
+    const data = cardData[index];
+
+    // Create card element
+    const card = document.createElement('div');
+    card.classList.add('flashcard');
+
+    // Create front of the card (image)
+    const front = document.createElement('img');
+    front.src = data.image;
+    front.alt = `Image ${index + 1}`;
+
+    // Create back of the card (text)
+    const back = document.createElement('div');
+    back.classList.add('back');
+    back.innerHTML = `<p>${data.text}</p>`;
+
+    // Append front and back to the card
+    card.appendChild(front);
+    card.appendChild(back);
+
+    // Append card to the container
+    cardsContainer.appendChild(card);
+
+    // Add click event listener to flip the card
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+    });
+  });
+</script>
+
+</body>
+</html>
+
